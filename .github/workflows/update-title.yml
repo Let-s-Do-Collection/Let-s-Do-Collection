@@ -1,0 +1,43 @@
+name: Update Issue Title with Mod Prefix
+
+on:
+  issues:
+    types:
+      - opened
+
+permissions:
+  issues: write
+
+jobs:
+  update-title:
+    runs-on: ubuntu-latest
+    if: "${{ startsWith(github.event.issue.title, '[MOD_ID]: ') }}"
+    steps:
+      - name: Get issue and update title
+        uses: actions/github-script@v7
+        with:
+          script: |
+            const issueNumber = context.issue.number;
+            const { data: issue } = await github.rest.issues.get({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              issue_number: issueNumber,
+            });
+
+            const body = issue.body;
+            const originalTitle = issue.title;
+
+            const modMatch = body.match(/### Mod\s*\n([^\n]+)/);
+            const mod = modMatch ? modMatch[1].trim() : null;
+
+            if (mod && originalTitle.startsWith("[MOD_ID]: ")) {
+              const cleaned = originalTitle.replace("[MOD_ID]: ", "").trim();
+              const newTitle = `[${mod}] ${cleaned}`;
+
+              await github.rest.issues.update({
+                owner: context.repo.owner,
+                repo: context.repo.repo,
+                issue_number: issueNumber,
+                title: newTitle
+              });
+            }
