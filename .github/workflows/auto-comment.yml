@@ -1,0 +1,29 @@
+name: Auto Comment on New Issue
+
+on:
+  issues:
+    types:
+      - opened
+
+permissions:
+  issues: write
+
+jobs:
+  post-comment:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Post automatic reply
+        uses: actions/github-script@v7
+        with:
+          script: |
+            github.rest.issues.createComment({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              issue_number: context.issue.number,
+              body: [
+                "Thanks so much for taking the time to report a bug!",
+                "",
+                "I'll take a look as soon as I get the chance and let you know here if I have any questions or need any more info.",
+                "If you've got any extra info, screenshots or logs, feel free to add them any time!"
+              ].join("\n")
+            });
