@@ -1,0 +1,29 @@
+name: Comment on "Information Needed" Label
+
+on:
+  issues:
+    types:
+      - labeled
+
+permissions:
+  issues: write
+
+jobs:
+  comment-if-info-needed:
+    runs-on: ubuntu-latest
+    if: ${{ github.event.label.name == 'information needed' }}
+    steps:
+      - name: Post comment
+        uses: actions/github-script@v7
+        with:
+          script: |
+            await github.rest.issues.createComment({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              issue_number: context.issue.number,
+              body: [
+                "More information is needed to move forward with this report.",
+                "",
+                "If no additional details are provided within the next 10 days, this issue will be automatically closed."
+              ].join("\n")
+            });

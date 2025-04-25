@@ -1,0 +1,52 @@
+name: Handle "Information Needed" Issues
+
+on:
+  schedule:
+    - cron: "0 9 * * *"   # Auto-Close täglich prüfen
+  issue_comment:
+    types:
+      - created           # Reaktion auf Antwort
+
+permissions:
+  issues: write
+
+jobs:
+  close-stale-information-needed:
+    if: github.event_name == 'schedule'
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/stale@v9
+        with:
+          days-before-stale: 10
+          days-before-close: 0
+          stale-issue-label: "information needed"
+          exempt-issue-labels: "do not close"
+          only-issue-labels: "information needed"
+          stale-issue-message: |
+            More information is needed to move forward with this report.  
+            If no additional details are provided within the next 10 days, this issue will be automatically closed.
+          close-issue-message: |
+            Since no further information was provided, this issue is being closed to keep things tidy.  
+            If you're able to provide the missing details later, feel free to comment and we’ll happily reopen it. Thank you!
+
+  remove-information-needed-on-reply:
+    if: github.event_name == 'issue_comment' && github.event.issue.state == 'open' && contains(github.event.issue.labels.*.name, 'information needed') && github.event.comment.user.type == 'User'
+    runs-on: ubuntu-latest
+    steps:
+      - name: Remove label and thank user
+        uses: actions/github-script@v7
+        with:
+          script: |
+            await github.rest.issues.removeLabel({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              issue_number: context.issue.number,
+              name: 'information needed'
+            });
+
+            await github.rest.issues.createComment({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              issue_number: context.issue.number,
+              body: `Thanks for the additional info! We’ll take another look based on your update.`
+            });

@@ -1,0 +1,23 @@
+name: Check for Duplicate Issues
+
+on:
+  issues:
+    types: [opened]
+
+permissions:
+  issues: read
+
+jobs:
+  duplicate-check:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Find duplicates
+        uses: tzkhan/gh-action-auto-comment@v1
+        with:
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          comment-identifier: duplicate-check
+          issue-type: issue
+          body: |
+            👋 Thanks for your report!  
+            Please make sure this isn’t a duplicate of an [existing issue](../../issues?q=is%3Aissue+is%3Aopen+${{ github.event.issue.title }}).  
+            If it is, feel free to add any new info there instead.

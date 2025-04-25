@@ -1,0 +1,24 @@
+name: Label inactive issues as "help wanted"
+
+on:
+  schedule:
+    - cron: "0 10 * * *"
+
+permissions:
+  issues: write
+
+jobs:
+  mark-help-wanted:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/stale@v9
+        with:
+          days-before-stale: 30
+          days-before-close: -1
+          stale-issue-message: |
+            This issue hasn't seen any activity for 30 days.  
+            To help move things forward, it's now marked as `help wanted`.  
+            If you're interested in contributing, feel free to take a look!
+          stale-issue-label: "help wanted"
+          exempt-issue-labels: "do not label"
+          only-labels: ""
