@@ -9,7 +9,7 @@ permissions:
   issues: write
 
 jobs:
-  auto-comment:
+  post-comment:
     runs-on: ubuntu-latest
     steps:
       - name: Post automatic reply
