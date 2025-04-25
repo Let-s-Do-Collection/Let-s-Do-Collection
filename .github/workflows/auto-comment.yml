@@ -9,8 +9,7 @@ permissions:
   issues: write
 
 jobs:
-  comment-if-fixed:
-    if: "${{ github.event.label.name == 'fixed' }}"
+  auto-comment:
     runs-on: ubuntu-latest
     steps:
       - name: Post automatic reply
@@ -22,8 +21,6 @@ jobs:
               repo: context.repo.repo,
               issue_number: context.issue.number,
               body: [
-                "This issue has been marked as fixed and will be rolled out with the next release of the respective mod.",
-                "",
                 "Thanks so much for taking the time to report a bug!",
                 "",
                 "We'll take a look as soon as we get the chance and let you know here if we have any questions or need any more info.",
