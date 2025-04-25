@@ -24,9 +24,6 @@ jobs:
               body: [
                 "This issue has been marked as fixed and will be rolled out with the next release of the respective mod.",
                 "",
-                "Thanks so much for taking the time to report a bug!",
-                "",
-                "We'll take a look as soon as we get the chance and let you know here if we have any questions or need any more info.",
-                "If you've got any extra info, screenshots or logs, feel free to add them any time!"
+                "Thank you for your report and for being an active part of the [Let's Do] Series! ❤️"
               ].join("\n")
             });
