@@ -1,0 +1,26 @@
+name: Assign rendering issues
+
+on:
+  issues:
+    types:
+      - opened
+
+permissions:
+  issues: write
+
+jobs:
+  update-title:
+    runs-on: ubuntu-latest
+    if: "${{ contains(github.event.issue.title, 'render') || contains(github.event.issue.body, 'render') }}"
+    steps:
+      - name: Assign cph
+        uses: actions/github-script@v7
+        with:
+          script: |
+            const issueNumber = context.issue.number;
+            github.rest.issues.addAssignees({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              issue_number: context.issue.number,
+              assignees: ['cph101']
+            })
