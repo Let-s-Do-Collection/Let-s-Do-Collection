@@ -27,7 +27,7 @@ jobs:
             const body = issue.body;
             const originalTitle = issue.title;
 
-            const modMatch = body.match(/### Mod\s*\n([^\n]+)/);
+            const modMatch = body.match(/###\s*Mod\s*\n+([^\n]+)/i);
             const mod = modMatch ? modMatch[1].trim() : null;
 
             if (mod && originalTitle.startsWith("[MOD_ID]: ")) {
