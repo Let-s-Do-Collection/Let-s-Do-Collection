@@ -17,6 +17,18 @@
     <a href="https://modrinth.com/mod/lets-do-beachparty"><img src="./.github/assets/beachparty.png" height="55" /></a>
 </p>
 
+***
+
+<h1 align="center">Supported Versions</h2>
+
+<p align="center">
+    <img src="https://img.shields.io/badge/1.21.1-actively%20supported-brightgreen?style=for-the-badge" />
+    <img src="https://img.shields.io/badge/1.20.X-available%20but%20unsupported-yellow?style=for-the-badge" />
+    <img src="https://img.shields.io/badge/1.19.X-available%20but%20unsupported-yellow?style=for-the-badge" />
+</p>
+
+***
+
 <h1 align="center">Be Part of Our Journey</h1>
 <p align="center">
     <a title="Discord" href="https://discord.gg/Vqu6wYZwdZ">
