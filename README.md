@@ -1,5 +1,5 @@
 <p align="center">
-    <img src="./.github/assets/logo.png" height="200" />
+    <img src="https://github.com/Let-s-Do-Collection/Let-s-Do-Collection/blob/main/LOGO.png?raw=true" height="200" />
 </p>
 
 <p align="center">
