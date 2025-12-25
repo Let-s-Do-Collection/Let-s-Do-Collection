@@ -71,11 +71,11 @@ body:
         - "Camping"
         - "Harvestfall"
         - "AlpineWhispers"
-        - "SafariBanquet"
-        - "Seasonal Gifts"
         - "WilderNature"
         - "Lili's Lucky Lures"
         - "Furniture"
+	- "Pottery"
+	- "Hearth & Timber"
     validations:
       required: true
 
