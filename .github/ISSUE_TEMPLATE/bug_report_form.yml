@@ -2,29 +2,34 @@ name: Issue Report
 description: Use this form to report an issue.
 title: "[MOD_ID]: "
 labels: ["bug"]
+
 body:
   - type: markdown
     attributes:
       value: |
         Thank you for taking the time to report an issue. Please remember, bugs are unintentional and your understanding is appreciated. Maintain a respectful tone throughout.
-        ⚠ **Important:** You don't have to change the [MOD_ID] yourself — this is done by a GitHub Action.
+
+        ⚠ **Important:**
+        - Minecraft **1.20.1 is no longer supported** due to limited development time.
+        - Issues reported for unsupported versions will be closed without further review.
+        - You don't have to change the `[MOD_ID]` yourself. This is handled automatically by a GitHub Action.
 
   - type: checkboxes
     id: has_tested_minimal_instance
     attributes:
       label: Minimal Instance Test
-      description: "Check if the issue persists with only this mod and its dependencies active."
+      description: Check if the issue persists with only this mod and its dependencies active.
       options:
-        - label: "Yes, I've tested on a minimal instance."
+        - label: Yes, I've tested on a minimal instance.
           required: true
 
   - type: checkboxes
     id: has_checked_for_similar_issues
     attributes:
       label: Check for Similar Issues
-      description: "Please search the issues to check if this bug has already been reported."
+      description: Please search the issues to check if this bug has already been reported.
       options:
-        - label: "Yes, I have checked for similar issues."
+        - label: Yes, I have checked for similar issues.
           required: true
 
   - type: dropdown
@@ -32,8 +37,8 @@ body:
     attributes:
       label: Platform
       options:
-        - "Fabric"
-        - "NeoForge"
+        - Fabric
+        - NeoForge
     validations:
       required: true
 
@@ -41,7 +46,7 @@ body:
     id: loader_version
     attributes:
       label: Loader Version
-      placeholder: "e.g., Fabric Loader 0.17.2 or NeoForge 21.1.205"
+      placeholder: e.g., Fabric Loader 0.17.2 or NeoForge 21.1.205
     validations:
       required: true
 
@@ -59,23 +64,23 @@ body:
     attributes:
       label: Mod
       options:
-        - "Vinery"
-        - "Meadow"
-        - "Bakery"
-        - "Candlelight"
-        - "HerbalBrews"
-        - "BloomingNature"
-        - "Farm & Charm"
-        - "Brewery"
-        - "Beachparty"
-        - "Camping"
-        - "Harvestfall"
-        - "AlpineWhispers"
-        - "WilderNature"
-        - "Lili's Lucky Lures"
-        - "Furniture"
-	- "Pottery"
-	- "Hearth & Timber"
+        - Vinery
+        - Meadow
+        - Bakery
+        - Candlelight
+        - HerbalBrews
+        - BloomingNature
+        - Farm & Charm
+        - Brewery
+        - Beachparty
+        - Camping
+        - Harvestfall
+        - AlpineWhispers
+        - WilderNature
+        - Lili's Lucky Lures
+        - Furniture
+        - Pottery
+        - Hearth & Timber
     validations:
       required: true
 
@@ -83,7 +88,7 @@ body:
     id: mod_version
     attributes:
       label: Mod Version
-      placeholder: "e.g., 1.3.14"
+      placeholder: e.g., 1.3.14
     validations:
       required: true
 
@@ -91,7 +96,7 @@ body:
     id: java_version
     attributes:
       label: Java Version
-      placeholder: "e.g., Java 21.0.7 (or 17.0.9)"
+      placeholder: e.g., Java 21.0.7 or 17.0.9
     validations:
       required: true
 
@@ -99,7 +104,7 @@ body:
     id: operating_system
     attributes:
       label: Operating System
-      placeholder: "e.g., Windows 11 build 26100 / macOS 14.6"
+      placeholder: e.g., Windows 11 build 26100 or macOS 14.6
     validations:
       required: true
 
@@ -107,8 +112,8 @@ body:
     id: description
     attributes:
       label: Issue Description
-      description: "Provide a comprehensive description of the issue."
-      placeholder: "What happened? Any errors on screen? Crash vs. logic bug?"
+      description: Provide a comprehensive description of the issue.
+      placeholder: What happened? Any errors on screen? Crash or logic bug?
     validations:
       required: true
 
@@ -116,7 +121,7 @@ body:
     id: expected
     attributes:
       label: Expected Behavior
-      placeholder: "What did you expect to happen?"
+      placeholder: What did you expect to happen?
     validations:
       required: true
 
@@ -124,7 +129,7 @@ body:
     id: reproduction_steps
     attributes:
       label: Steps to Reproduce
-      description: "Enumerate the steps needed to replicate the issue."
+      description: Enumerate the steps needed to replicate the issue.
       placeholder: |
         1. ...
         2. ...
@@ -136,8 +141,8 @@ body:
     id: other_mods
     attributes:
       label: Other Mods Present
-      description: "List other mods (and versions) present when reproducing the issue. Empty if minimal instance."
-      placeholder: "e.g., Sodium 0.6.13, EntityCulling 1.8.2"
+      description: List other mods (and versions) present when reproducing the issue. Leave empty if minimal instance.
+      placeholder: e.g., Sodium 0.6.13, EntityCulling 1.8.2
     validations:
       required: false
 
@@ -145,8 +150,8 @@ body:
     id: logs
     attributes:
       label: Link to logs
-      description: "Upload logs via https://pastebin.com/ or https://mclo.gs and provide the link here."
-      placeholder: "https://mclo.gs/abcdef"
+      description: Upload logs via https://pastebin.com or https://mclo.gs and provide the link here.
+      placeholder: https://mclo.gs/abcdef
     validations:
       required: true
 
@@ -154,6 +159,6 @@ body:
     id: screenshots
     attributes:
       label: Screenshots / Crash Reports
-      description: "Optional. Drag & drop images here, or paste additional crash report snippets."
+      description: Optional. Drag & drop images here, or paste additional crash report snippets.
     validations:
       required: false
