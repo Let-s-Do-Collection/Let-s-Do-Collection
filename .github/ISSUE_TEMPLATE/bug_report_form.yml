@@ -1,35 +1,68 @@
-name: Issue Report
-description: Report a bug or unexpected behavior.
+name: Bug Report
+description: Report a bug or unexpected behavior in a Let's Do mod.
 title: "[MOD_ID]: "
-labels: ["bug"]
+labels: ["bug", "needs-triage"]
 
 body:
   - type: markdown
     attributes:
       value: |
-        Thanks for reporting an issue.
+        Thanks for taking the time to report an issue!
 
-        ⚠ Notes:
+        ⚠ **Before you start**
         - Minecraft **1.21.1 requires Java 21**
-        - Unsupported versions will be closed
+        - Unsupported Minecraft versions will be closed
+        - Questions and support requests belong on Discord, not here
+        - Please write in **English**
 
   - type: checkboxes
-    id: has_tested_minimal_instance
+    id: preflight
     attributes:
-      label: Minimal Instance Test
-      description: Does the issue still happen with only this mod and its dependencies?
+      label: Checklist
       options:
-        - label: Yes, I've tested on a minimal instance.
+        - label: I am using the **latest version** of the mod and its dependencies.
+          required: true
+        - label: I have searched existing issues and this has not been reported yet.
           required: true
 
-  - type: checkboxes
-    id: has_checked_for_similar_issues
+  - type: dropdown
+    id: mod
     attributes:
-      label: Similar Issues
-      description: Please check if this issue was already reported.
+      label: Mod
       options:
-        - label: Yes, I have checked for similar issues.
-          required: true
+        - AlpineWhispers
+        - Bakery
+        - Beachparty
+        - BloomingNature
+        - Brewery
+        - Camping
+        - Candlelight
+        - Farm & Charm
+        - Furniture
+        - Harvestfall
+        - Hearth & Timber
+        - HerbalBrews
+        - Lili's Lucky Lures
+        - Meadow
+        - Pottery
+        - Vinery
+        - WilderNature
+        - Smoker
+        - Legacy
+        - All that flies is not just Wings
+        - Grime & Gloss
+        - Multiple / interaction between Let's Do mods
+    validations:
+      required: true
+
+  - type: input
+    id: mod_version
+    attributes:
+      label: Mod Version
+      description: Found in the .jar file name or the in-game mod menu.
+      placeholder: e.g. 1.5.3
+    validations:
+      required: true
 
   - type: dropdown
     id: platform
@@ -41,6 +74,15 @@ body:
     validations:
       required: true
 
+  - type: input
+    id: loader_version
+    attributes:
+      label: Loader & Dependency Versions
+      description: Fabric Loader / NeoForge version, plus Fabric API and Architectury API if used.
+      placeholder: e.g. Fabric Loader 0.16.5, Fabric API 0.105.0, Architectury 13.0.8
+    validations:
+      required: false
+
   - type: dropdown
     id: minecraft_version
     attributes:
@@ -51,43 +93,49 @@ body:
       required: true
 
   - type: dropdown
-    id: mod
+    id: environment
     attributes:
-      label: Mod
+      label: Environment
+      description: Where does the issue occur?
+      multiple: true
       options:
-        - Vinery
-        - Meadow
-        - Bakery
-        - Candlelight
-        - HerbalBrews
-        - BloomingNature
-        - Farm & Charm
-        - Brewery
-        - Beachparty
-        - Camping
-        - Harvestfall
-        - AlpineWhispers
-        - WilderNature
-        - Lili's Lucky Lures
-        - Furniture
-        - Pottery
-        - Hearth & Timber
+        - Singleplayer
+        - Dedicated server
+        - LAN / open to LAN
+    validations:
+      required: true
+
+  - type: dropdown
+    id: minimal_instance
+    attributes:
+      label: Minimal Instance Test
+      description: Does the issue still happen with only this mod and its required dependencies installed?
+      options:
+        - Yes, it also happens on a minimal instance
+        - No, it only happens in my modpack
+        - Not tested
     validations:
       required: true
 
   - type: input
-    id: mod_version
+    id: modpack
     attributes:
-      label: Mod Version
-      placeholder: e.g. 1.5.3
-    validations:
-      required: true
+      label: Modpack (optional)
+      description: If it only happens in a modpack, name and version.
+      placeholder: e.g. Cozy Farming Pack 2.3.47
 
   - type: textarea
     id: description
     attributes:
-      label: Issue Description
-      placeholder: What happened? What went wrong?
+      label: What happened?
+      placeholder: Describe the bug.
+    validations:
+      required: true
+
+  - type: textarea
+    id: expected
+    attributes:
+      label: What did you expect to happen?
     validations:
       required: true
 
@@ -106,13 +154,15 @@ body:
     id: logs
     attributes:
       label: Logs
-      description: Upload logs via https://mclo.gs and paste the link.
+      description: |
+        Upload `logs/latest.log` (and `crash-reports/…` if the game crashed) to https://mclo.gs and paste the link.
+        Please do not paste raw logs here.
       placeholder: https://mclo.gs/abcdef
     validations:
-      required: true
+      required: false
 
   - type: textarea
     id: screenshots
     attributes:
-      label: Screenshots (optional)
-      description: Drag & drop images or paste crash snippets here.
+      label: Screenshots / Videos (optional)
+      description: Drag & drop images or videos here.
