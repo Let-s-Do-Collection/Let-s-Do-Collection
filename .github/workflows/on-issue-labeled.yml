@@ -4,7 +4,6 @@ on:
   issues:
     types:
       - labeled
-      - assigned
 
 permissions:
   issues: write
@@ -12,23 +11,18 @@ permissions:
 jobs:
   process-label:
     runs-on: ubuntu-latest
-    if: github.event.action == 'assigned' || contains(fromJSON('["fixed", "implemented", "information needed", "cant reproduce", "wontfix", "not an issue", "high priority"]'), github.event.label.name)
+    if: contains(fromJSON('["fixed", "implemented", "information needed"]'), github.event.label.name)
     steps:
-      - name: Update triage state, reply and close
+      - name: Reply and close
         uses: actions/github-script@v9
         with:
           script: |
-            const issue = context.payload.issue;
-            const label = context.payload.label?.name;
+            const label = context.payload.label.name;
             const params = {
               owner: context.repo.owner,
               repo: context.repo.repo,
-              issue_number: issue.number,
+              issue_number: context.payload.issue.number,
             };
-
-            if (issue.labels.some((l) => l.name === "needs-triage")) {
-              await github.rest.issues.removeLabel({ ...params, name: "needs-triage" });
-            }
 
             const replies = {
               "fixed": [
@@ -47,8 +41,6 @@ jobs:
                 "If no additional details are provided within the next 10 days, this issue will be automatically closed.",
               ],
             };
-
-            if (!replies[label]) return;
 
             await github.rest.issues.createComment({ ...params, body: replies[label].join("\n") });
 

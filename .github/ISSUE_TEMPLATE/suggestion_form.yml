@@ -1,6 +1,7 @@
 name: Suggestion
 description: Suggest a new feature, an improvement or an idea for the Let's Do mods.
-labels: ["suggestion", "needs-triage"]
+type: Feature
+labels: ["suggestion"]
 
 body:
   - type: markdown
