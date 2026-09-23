@@ -1,1 +1,11 @@
 blank_issues_enabled: false
+contact_links:
+  - name: Questions & Support
+    url: https://discord.gg/Vqu6wYZwdZ
+    about: Ask questions and get help from the community on our Discord.
+  - name: Wiki & Guides
+    url: https://www.lets-do.ch
+    about: Recipes, mechanics and guides for every Let's Do mod.
+  - name: Contact
+    url: https://www.lets-do.ch
+    about: For anything else, reach us at hello@lets-do.ch

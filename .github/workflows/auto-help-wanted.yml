@@ -11,14 +11,17 @@ jobs:
   mark-help-wanted:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/stale@v9
+      - uses: actions/stale@v11
         with:
-          days-before-stale: 30
-          days-before-close: -1
+          days-before-issue-stale: 30
+          days-before-issue-close: -1
+          days-before-pr-stale: -1
+          days-before-pr-close: -1
           stale-issue-message: |
             This issue hasn't seen any activity for 30 days.  
             To help move things forward, it's now marked as `help wanted`.  
             If you're interested in contributing, feel free to take a look!
           stale-issue-label: "help wanted"
-          exempt-issue-labels: "do not label"
-          only-labels: ""
+          exempt-issue-labels: "no automation,information needed"
+          exempt-all-issue-assignees: true
+          remove-stale-when-updated: false

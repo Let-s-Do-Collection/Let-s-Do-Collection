@@ -1,6 +1,5 @@
 name: Bug Report
-description: Report a bug or unexpected behavior in a Let's Do mod.
-title: "[MOD_ID]: "
+description: Report a bug, crash or unexpected behavior in a Let's Do mod.
 labels: ["bug", "needs-triage"]
 
 body:
@@ -12,7 +11,8 @@ body:
         ⚠ **Before you start**
         - Minecraft **1.21.1 requires Java 21**
         - Unsupported Minecraft versions will be closed
-        - Questions and support requests belong on Discord, not here
+        - Questions and support requests belong on [Discord](https://discord.gg/Vqu6wYZwdZ), not here
+        - Have an idea instead? Please use the **Suggestion** template
         - Please write in **English**
 
   - type: checkboxes
@@ -30,6 +30,7 @@ body:
     attributes:
       label: Mod
       options:
+        - All that flies is not just Wings
         - AlpineWhispers
         - Bakery
         - Beachparty
@@ -39,18 +40,17 @@ body:
         - Candlelight
         - Farm & Charm
         - Furniture
+        - Grime & Gloss
         - Harvestfall
         - Hearth & Timber
         - HerbalBrews
+        - Legacy
         - Lili's Lucky Lures
+        - Lili's Pottery
         - Meadow
-        - Pottery
+        - Smoker
         - Vinery
         - WilderNature
-        - Smoker
-        - Legacy
-        - All that flies is not just Wings
-        - Grime & Gloss
         - Multiple / interaction between Let's Do mods
     validations:
       required: true
@@ -65,9 +65,27 @@ body:
       required: true
 
   - type: dropdown
+    id: category
+    attributes:
+      label: Category
+      description: What kind of problem is it?
+      options:
+        - Crash
+        - Rendering / Visual
+        - Gameplay / Mechanics
+        - Recipes / Loot / Tags
+        - World Generation
+        - Compatibility with other mods
+        - Performance
+        - Other
+    validations:
+      required: true
+
+  - type: dropdown
     id: platform
     attributes:
       label: Platform
+      multiple: true
       options:
         - Fabric
         - NeoForge
@@ -156,7 +174,7 @@ body:
       label: Logs
       description: |
         Upload `logs/latest.log` (and `crash-reports/…` if the game crashed) to https://mclo.gs and paste the link.
-        Please do not paste raw logs here.
+        **Required for crashes.** Please do not paste raw logs here.
       placeholder: https://mclo.gs/abcdef
     validations:
       required: false

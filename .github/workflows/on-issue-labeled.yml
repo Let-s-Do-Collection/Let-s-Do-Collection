@@ -1,0 +1,57 @@
+name: On Issue Labeled
+
+on:
+  issues:
+    types:
+      - labeled
+      - assigned
+
+permissions:
+  issues: write
+
+jobs:
+  process-label:
+    runs-on: ubuntu-latest
+    if: github.event.action == 'assigned' || contains(fromJSON('["fixed", "implemented", "information needed", "cant reproduce", "wontfix", "not an issue", "high priority"]'), github.event.label.name)
+    steps:
+      - name: Update triage state, reply and close
+        uses: actions/github-script@v9
+        with:
+          script: |
+            const issue = context.payload.issue;
+            const label = context.payload.label?.name;
+            const params = {
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              issue_number: issue.number,
+            };
+
+            if (issue.labels.some((l) => l.name === "needs-triage")) {
+              await github.rest.issues.removeLabel({ ...params, name: "needs-triage" });
+            }
+
+            const replies = {
+              "fixed": [
+                "This issue has been marked as fixed and will be rolled out with the next release of the respective mod.",
+                "",
+                "Thank you for your report and for being an active part of the [Let's Do] Series! ❤️",
+              ],
+              "implemented": [
+                "This suggestion has been implemented and will be included in the next release of the respective mod.",
+                "",
+                "Thank you for your idea and for being an active part of the [Let's Do] Series! ❤️",
+              ],
+              "information needed": [
+                "More information is needed to move forward with this report.",
+                "",
+                "If no additional details are provided within the next 10 days, this issue will be automatically closed.",
+              ],
+            };
+
+            if (!replies[label]) return;
+
+            await github.rest.issues.createComment({ ...params, body: replies[label].join("\n") });
+
+            if (label === "fixed" || label === "implemented") {
+              await github.rest.issues.update({ ...params, state: "closed", state_reason: "completed" });
+            }

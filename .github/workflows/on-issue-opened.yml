@@ -1,0 +1,82 @@
+name: On Issue Opened
+
+on:
+  issues:
+    types:
+      - opened
+
+permissions:
+  issues: write
+
+jobs:
+  process-issue:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Prefix title, label, assign and reply
+        uses: actions/github-script@v9
+        with:
+          script: |
+            const issue = context.payload.issue;
+            const body = issue.body ?? "";
+            const params = {
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              issue_number: issue.number,
+            };
+
+            const field = (name) => {
+              const match = body.match(new RegExp(`###\\s*${name}\\s*\\n+([^\\n]+)`, "i"));
+              const value = match?.[1].trim();
+              return value && value !== "_No response_" ? value : null;
+            };
+
+            const slug = (value) => value
+              .toLowerCase()
+              .replace(/&/g, "and")
+              .replace(/'/g, "")
+              .replace(/[^a-z0-9]+/g, "-")
+              .replace(/^-|-$/g, "");
+
+            const labels = [];
+
+            let mod = field("Mod");
+            if (mod?.startsWith("Multiple")) mod = "Multiple";
+            if (mod?.startsWith("General")) mod = "General";
+
+            if (mod) {
+              const cleaned = (issue.title ?? "").replace(/^\[[^\]]*\]:?\s*/, "").trim() || "Untitled issue";
+              await github.rest.issues.update({ ...params, title: `[${mod}] ${cleaned}` });
+              labels.push(slug(mod));
+            }
+
+            const platforms = field("Platform");
+            if (platforms) {
+              labels.push(...platforms.split(",").map((platform) => slug(platform.trim())));
+            }
+
+            if (labels.length) {
+              await github.rest.issues.addLabels({ ...params, labels });
+            }
+
+            if (field("Category") === "Rendering / Visual") {
+              await github.rest.issues.addAssignees({ ...params, assignees: ["cph101"] });
+            }
+
+            if (["OWNER", "MEMBER", "COLLABORATOR"].includes(issue.author_association)) return;
+
+            const isSuggestion = issue.labels.some((label) => label.name === "suggestion");
+            const reply = isSuggestion
+              ? [
+                  "Thanks so much for sharing your idea!",
+                  "",
+                  "We'll take a look and let you know here if we have any questions.",
+                  "Feel free to add sketches, references or any other details at any time!",
+                ]
+              : [
+                  "Thanks so much for taking the time to report a bug!",
+                  "",
+                  "We'll take a look as soon as we get the chance and let you know here if we have any questions or need any more info.",
+                  "If you've got any extra info, screenshots or logs, feel free to add them any time!",
+                ];
+
+            await github.rest.issues.createComment({ ...params, body: reply.join("\n") });

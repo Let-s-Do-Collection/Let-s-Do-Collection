@@ -1,0 +1,72 @@
+name: Suggestion
+description: Suggest a new feature, an improvement or an idea for the Let's Do mods.
+labels: ["suggestion", "needs-triage"]
+
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Thanks for sharing your idea!
+
+        Please write in **English** and keep it to **one suggestion per issue**, so each idea can be discussed and tracked on its own.
+
+  - type: checkboxes
+    id: preflight
+    attributes:
+      label: Checklist
+      options:
+        - label: I have searched existing issues and this has not been suggested yet.
+          required: true
+
+  - type: dropdown
+    id: mod
+    attributes:
+      label: Mod
+      options:
+        - All that flies is not just Wings
+        - AlpineWhispers
+        - Bakery
+        - Beachparty
+        - BloomingNature
+        - Brewery
+        - Camping
+        - Candlelight
+        - Farm & Charm
+        - Furniture
+        - Grime & Gloss
+        - Harvestfall
+        - Hearth & Timber
+        - HerbalBrews
+        - Legacy
+        - Lili's Lucky Lures
+        - Lili's Pottery
+        - Meadow
+        - Smoker
+        - Vinery
+        - WilderNature
+        - Multiple / interaction between Let's Do mods
+        - General / new mod idea
+    validations:
+      required: true
+
+  - type: textarea
+    id: idea
+    attributes:
+      label: Your Suggestion
+      description: Describe your idea as clearly as possible.
+    validations:
+      required: true
+
+  - type: textarea
+    id: motivation
+    attributes:
+      label: Why would this be useful?
+      description: What problem does it solve, or how would it improve gameplay?
+    validations:
+      required: true
+
+  - type: textarea
+    id: context
+    attributes:
+      label: Additional Context (optional)
+      description: Sketches, screenshots, references to other mods or anything else that helps.
